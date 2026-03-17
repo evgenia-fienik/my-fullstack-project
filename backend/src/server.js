@@ -1,6 +1,6 @@
 
 import express from 'express';
-import pino from 'pino-pretty';
+import pino from 'pino-http';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import swaggerUi from 'swagger-ui-express';
@@ -25,11 +25,13 @@ const __dirname = path.dirname(__filename);
   const PORT = Number(process.env.PORT) || 4000;
 
   // 1. Логер (краще ставити першим, щоб бачити всі запити)
-  app.use(
-    pino({
-      transport: { target: 'pino-pretty' },
-    })
-  );
+ app.use(
+  pino({
+    transport: process.env.NODE_ENV !== 'production' 
+      ? { target: 'pino-pretty' } 
+      : undefined,
+  })
+);
 
   // 2. Базові middleware
   app.use(cors({ origin: 'http://localhost:3000' }));
