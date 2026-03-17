@@ -1,0 +1,39 @@
+users:
+  get:
+    tags:
+      - Users
+    summary: Get all users with pagination
+    parameters:
+      - in: query
+        name: page
+        schema:
+          type: integer
+          default: 1
+        description: Page number
+      - in: query
+        name: perPage
+        schema:
+          type: integer
+          default: 10
+        description: Items per page
+    responses:
+      '200':
+        description: Successfully found users
+
+usersById:
+  get:
+    tags:
+      - Users
+    summary: Get user by ID with their stories
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        description: User ID
+    responses:
+      '200':
+        description: Successfully found user
+      '404':
+        description: User not found

@@ -1,0 +1,936 @@
+openapi: 3.0.0
+info:
+  title: Fullstack API
+  version: 1.0.0
+  description: API documentation
+
+servers:
+  - url: http://localhost:4000
+    description: Local server
+
+tags:
+  - name: Auth
+    description: Authentication endpoints
+  - name: Users
+    description: Users endpoints
+
+paths:
+  /api/auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, email, password]
+              properties:
+                name:
+                  type: string
+                  example: Ivan
+                email:
+                  type: string
+                  example: ivan@example.com
+                password:
+                  type: string
+                  example: "123456"
+      responses:
+        '201':
+          description: User successfully registered
+        '409':
+          description: Email already in use
+
+
+  /api/auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email:
+                  type: string
+                  example: ivan@example.com
+                password:
+                  type: string
+                  example: "123456"
+      responses:
+        '200':
+          description: Successfully logged in
+        '401':
+          description: Invalid email or password
+
+  /api/auth/refresh:
+    post:
+      tags:
+        - Auth
+      summary: Refresh access token
+      responses:
+        '200':
+          description: Token successfully refreshed
+        '401':
+          description: Unauthorized
+
+  /api/auth/logout:
+    post:
+      tags:
+        - Auth
+      summary: Logout user
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successfully logged out
+        '401':
+          description: Unauthorized
+
+  /api/users:
+    get:
+      tags:
+        - Users
+      summary: Get all users with pagination
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+          description: Page number  
+        - in: query
+          name: perPage
+          schema:
+            type: integer
+            default: 10
+          description: Items per page  
+      responses:
+        '200':
+          description: Successfully found users
+          content:
+             application/json:
+               schema:
+                 type: object 
+                 properties: 
+                    status:
+                      type: integer
+                      example: 200
+                    message: 
+                      type: string
+                      example: Successfully found users!
+                    data: 
+                      type: object 
+                      properties: 
+                        users:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            _id:
+                              type: string
+                              example: 6881563901add19ee16fcff5
+                            name: 
+                              type: string
+                              example: Дмитро Романенко
+                            avatarUrl: 
+                              type: string
+                              example: https://example.com/avatar.webp
+                            description: 
+                              type: string
+                              example: Привіт! Я Дмитро.
+                            articlesAmount: 
+                              type: integer
+                              example: 13
+                        page: 
+                          type: integer
+                          example: 1
+                        perPage: 
+                          type: integer
+                          example: 10
+                        totalItems: 
+                          type: integer
+                          example: 25
+                        totalPages: 
+                          type: integer
+                          example: 3
+                        hasPreviousPage:
+                          type: boolean
+                          example: false
+                        hasNextPage:
+                          type: boolean
+                          example: true      
+
+                           
+  /api/users/me:
+    get:
+      tags:
+        - Users
+      summary: Get current user
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successfully fetched current user
+        '401':
+          description: Unauthorized
+    patch:
+      tags:
+        - Users
+      summary: Update current user
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Ivan
+                email:
+                  type: string
+                  example: ivan@example.com
+                password: 
+                  type: string
+                  example: newpassword
+                avatar:
+                   type: string
+                   example: binary    
+      responses:
+        '200':
+          description: User updated successfully
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  message: 
+                    type: string
+                    example: User updated successfully!
+                  data:
+                    type: object
+                    properties: 
+                      user: 
+                        $ref: '#/components/schemas/User'    
+        '401':
+          description: Unauthorized
+
+  /api/users/{id}:
+    get:
+      tags:
+        - Users
+      summary: Get user by ID with their stories
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: User ID  
+      responses:
+        '200':
+          description: Successfully found user
+          content: 
+          application/json:
+            schema: 
+              type: object
+              properties:
+                status: 
+                  type: integer
+                  example: 200
+                message: 
+                  type: string
+                  example: Successfully found user!
+                data:
+                  type: object
+                  properties: 
+                    user: 
+                      type: object
+                      properties: 
+                        _id: 
+                          type: string
+                          example: 6881563901add19ee16fcff5
+                        name: 
+                          type: string
+                          example: Дмитро Романенко
+                        avatarUrl: 
+                          type: string
+                          example: https://example.com/avatar.webp   
+                        description: 
+                          type: string
+                          example: Привіт! Я Дмитро.
+                        articlesAmount: 
+                          type: integer
+                          example: 13
+                    stories:
+                      type: array
+                      items": 
+                        type": object
+                        properties: 
+                          _id: 
+                            type: string
+                            example: 68498236a100312bea079008
+                          title: 
+                            type: string
+                            example: Йорданія шлях у Петру
+                          img:  
+                            type: string
+                            example: https://example.com/story.webp  
+                          date:
+                            type: string
+                            example: 2025-01-10
+                          category:
+                            type: string
+                            example: travel
+                          favoriteCount: 
+                            type: integer
+                            example: 4    
+
+        '404':
+          description: User not found
+          content: 
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 404
+                  message: 
+                    type: string
+                    example: User not found!  
+
+  /api/stories:
+    get:
+      tags:
+        - Stories
+      summary: Get all stories with pagination and filter by category
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+          description: Page number
+        - in: query
+          name: perPage
+          schema:
+            type: integer
+            default: 10
+          description: Items per page
+        - in: query
+          name: categoryId
+          schema:
+            type: string
+          description: Filter by category ID
+      responses:
+        '200':
+          description: Successfully found stories
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: Successfully found stories!
+                  data:
+                    type: object
+                    properties:
+                      stories:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            _id:
+                              type: string
+                              example: 68498236a100312bea079008
+                            title:
+                              type: string
+                              example: Йорданія шлях у Петру
+                            img:
+                              type: string
+                              example: https://example.com/story.webp
+                            date:
+                              type: string
+                              example: 2025-01-10
+                            category:
+                              type: string
+                              example: 68fb50c80ae91338641121f0
+                            favoriteCount:
+                              type: integer
+                              example: 4
+                            ownerId:
+                              type: string
+                              example: 6881563901add19ee16fcff5
+                      page:
+                        type: integer
+                        example: 1
+                      perPage:
+                        type: integer
+                        example: 10
+                      totalItems:
+                        type: integer
+                        example: 25
+                      totalPages:
+                        type: integer
+                        example: 3
+                      hasPreviousPage:
+                        type: boolean
+                        example: false
+                      hasNextPage:
+                        type: boolean
+                        example: true
+  /api/stories/favorites:
+    get:
+      tags:
+        - Stories
+      summary: Get saved stories with pagination
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+          description: Page number
+        - in: query
+          name: perPage
+          schema:
+            type: integer
+            default: 10
+          description: Items per page
+      responses:
+        '200':
+          description: Successfully found favorites
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: Successfully found favorites!
+                  data:
+                    type: object
+                    properties:
+                      stories:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            _id:
+                              type: string
+                              example: 68498236a100312bea079008
+                            title:
+                              type: string
+                              example: Йорданія шлях у Петру
+                            img:
+                              type: string
+                              example: https://example.com/story.webp
+                            date:
+                              type: string
+                              example: 2025-01-10
+                            category:
+                              type: string
+                              example: 68fb50c80ae91338641121f0
+                            favoriteCount:
+                              type: integer
+                              example: 4
+                            ownerId:
+                              type: string
+                              example: 6881563901add19ee16fcff5
+                      page:
+                        type: integer
+                        example: 1
+                      perPage:
+                        type: integer
+                        example: 10
+                      totalItems:
+                        type: integer
+                        example: 25
+                      totalPages:
+                        type: integer
+                        example: 3
+                      hasPreviousPage:
+                        type: boolean
+                        example: false
+                      hasNextPage:
+                        type: boolean
+                        example: true
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 401
+                  message:
+                    type: string
+                    example: Unauthorized       
+                        
+  /api/stories/{id}/favorites:
+    post:
+      tags:
+        - Stories
+      summary: Add story to favorites
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Story ID
+      responses:
+        '200':
+          description: Story added to favorites
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: Story added to favorites!
+        '404':
+          description: Story not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: Story not found!
+        '409':
+          description: Story already in favorites
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 409
+                  message:
+                    type: string
+                    example: Story already in favorites!
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 401
+                  message:
+                    type: string
+                    example: Unauthorized
+    delete:
+      tags:
+        - Stories
+      summary: Remove story from favorites
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Story ID
+      responses:
+        '200':
+          description: Story removed from favorites
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: Story removed from favorites!
+        '404':
+          description: Story not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: Story not found!
+        '409':
+          description: Story not in favorites
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 409
+                  message:
+                    type: string
+                    example: Story not in favorites!
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 401
+                  message:
+                    type: string
+                    example: Unauthorized      
+  /api/stories/my:
+    get:
+      tags:
+        - Stories
+      summary: Get my stories with pagination
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+          description: Page number
+        - in: query
+          name: perPage
+          schema:
+            type: integer
+            default: 10
+          description: Items per page
+      responses:
+        '200':
+          description: Successfully found your stories
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: Successfully found your stories!
+                  data:
+                    type: object
+                    properties:
+                      stories:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            _id:
+                              type: string
+                              example: 68498236a100312bea079008
+                            title:
+                              type: string
+                              example: Йорданія шлях у Петру
+                            img:
+                              type: string
+                              example: https://example.com/story.webp
+                            date:
+                              type: string
+                              example: 2025-01-10
+                            category:
+                              type: string
+                              example: 68fb50c80ae91338641121f0
+                            favoriteCount:
+                              type: integer
+                              example: 4
+                            ownerId:
+                              type: string
+                              example: 6881563901add19ee16fcff5
+                      page:
+                        type: integer
+                        example: 1
+                      perPage:
+                        type: integer
+                        example: 10
+                      totalItems:
+                        type: integer
+                        example: 25
+                      totalPages:
+                        type: integer
+                        example: 3
+                      hasPreviousPage:
+                        type: boolean
+                        example: false
+                      hasNextPage:
+                        type: boolean
+                        example: true
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 401
+                  message:
+                    type: string
+                    example: Unauthorized               
+    post:
+      tags:
+        - Stories
+      summary: Create a new story
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - title
+                - article
+                - category
+                - date
+              properties:
+                title:
+                  type: string
+                  example: Йорданія шлях у Петру
+                article:
+                  type: string
+                  example: Текст статті...
+                category:
+                  type: string
+                  example: 68fb50c80ae91338641121f0
+                date:
+                  type: string
+                  example: 2025-01-10
+                img:
+                  type: string
+                  format: binary
+      responses:
+        '201':
+          description: Story created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 201
+                  message:
+                    type: string
+                    example: Story created successfully!
+                  data:
+                    type: object
+                    properties:
+                      story:
+                        type: object
+                        properties:
+                          _id:
+                            type: string
+                            example: 68498236a100312bea079008
+                          title:
+                            type: string
+                            example: Йорданія шлях у Петру
+                          img:
+                            type: string
+                            example: https://example.com/story.webp
+                          article:
+                            type: string
+                            example: Текст статті...
+                          date:
+                            type: string
+                            example: 2025-01-10
+                          category:
+                            type: string
+                            example: 68fb50c80ae91338641121f0
+                          favoriteCount:
+                            type: integer
+                            example: 0
+                          ownerId:
+                            type: string
+                            example: 6881563901add19ee16fcff5
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 401
+                  message:
+                    type: string
+                    example: Unauthorized   
+  /api/stories/{id}:
+    patch:
+      tags:
+        - Stories
+      summary: Update story
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Story ID
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Йорданія шлях у Петру
+                article:
+                  type: string
+                  example: Текст статті...
+                category:
+                  type: string
+                  example: 68fb50c80ae91338641121f0
+                date:
+                  type: string
+                  example: 2025-01-10
+                img:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Story updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: Story updated successfully!
+                  data:
+                    type: object
+                    properties:
+                      story:
+                        type: object
+                        properties:
+                          _id:
+                            type: string
+                            example: 68498236a100312bea079008
+                          title:
+                            type: string
+                            example: Йорданія шлях у Петру
+                          img:
+                            type: string
+                            example: https://example.com/story.webp
+                          article:
+                            type: string
+                            example: Текст статті...
+                          date:
+                            type: string
+                            example: 2025-01-10
+                          category:
+                            type: string
+                            example: 68fb50c80ae91338641121f0
+                          favoriteCount:
+                            type: integer
+                            example: 0
+                          ownerId:
+                            type: string
+                            example: 6881563901add19ee16fcff5
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 403
+                  message:
+                    type: string
+                    example: You are not allowed to edit this story!
+        '404':
+          description: Story not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 404
+                  message:
+                    type: string
+                    example: Story not found!
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: integer
+                    example: 401
+                  message:
+                    type: string
+                    example: Unauthorized                                                                                                                                  
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+      
