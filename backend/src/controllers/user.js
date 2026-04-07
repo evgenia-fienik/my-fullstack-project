@@ -78,8 +78,6 @@ export const getAllUsersController = async (req, res, next) =>{
     try{
         const {page = 1, perPage = 10} = req.query;
 
-        console.log('=== GET ALL USERS ==='); // ← додай
-
         const pageNum = parseInt(page);
         const limit = parseInt(perPage);
         const skip = (pageNum - 1) * limit;

@@ -1,26 +1,99 @@
 @import "tailwindcss";
+@import 'modern-normalize';
 
+/* --- Core / Base Palette --- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+
+   --font-family: var(--font-nunito-sans);
+  --second-family: var(--font-sora);
+
+  /* Core colors */
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-neutral-lightest: #f2f2f2;
+  --color-neutral-lighter: #d8d8d8;
+  --color-neutral-light: #b2b2b2;
+  --color-neutral: #7f7f7f;
+  --color-neutral-dark: #4c4c4c;
+  --color-neutral-darkest: #191919;
+
+  --color-royal-blue-lightest: #f7f9ff;
+  --color-royal-blue-lighter: #e8eeff;
+  --color-royal-blue-light: #7a96ea;
+  --color-royal-blue: #4169e1;
+  --color-royal-blue-dark: #3454b4;
+  --color-royal-blue-darker: #1a2a5a;
+  --color-royal-blue-darkest: #131f43;
+
+  --color-red: #b00101;
+
+  /* Opacity helpers */
+  --opacity-transparent: rgba(255, 255, 255, 0);
+  --opacity-white-5: rgba(255, 255, 255, 0.05);
+  --opacity-white-10: rgba(255, 255, 255, 0.1);
+  --opacity-white-15: rgba(255, 255, 255, 0.15);
+  --opacity-white-20: rgba(255, 255, 255, 0.2);
+  --opacity-white-30: rgba(255, 255, 255, 0.3);
+  --opacity-white-40: rgba(255, 255, 255, 0.4);
+  --opacity-white-50: rgba(255, 255, 255, 0.5);
+  --opacity-white-60: rgba(255, 255, 255, 0.6);
+
+  --opacity-neutral-darkest-5: rgba(0, 0, 0, 0.05);
+  --opacity-neutral-darkest-10: rgba(0, 0, 0, 0.1);
+  --opacity-neutral-darkest-15: rgba(0, 0, 0, 0.15);
+  --opacity-neutral-darkest-20: rgba(0, 0, 0, 0.2);
+  --opacity-neutral-darkest-30: rgba(0, 0, 0, 0.3);
+  --opacity-neutral-darkest-40: rgba(0, 0, 0, 0.4);
+  --opacity-neutral-darkest-50: rgba(0, 0, 0, 0.5);
+  --opacity-neutral-darkest-60: rgba(0, 0, 0, 0.6);
+
+  /* --- Semantic / Component Colors --- */
+  /* Backgrounds */
+  --color-scheme-1-background: var(--color-white);
+  --color-scheme-1-foreground: var(--color-neutral-lightest);
+  --color-scheme-1-text: var(--color-neutral-darkest);
+  --color-scheme-1-border: var(--opacity-neutral-darkest-15);
+
+  --color-scheme-2-background: var(--color-royal-blue-lightest);
+  --color-scheme-2-foreground: var(--color-royal-blue-lighter);
+  --color-scheme-2-text: var(--color-neutral-darkest);
+  --color-scheme-2-border: var(--opacity-neutral-darkest-15);
+
+  /* Buttons */
+  --btn-background: var(--color-royal-blue);
+  --btn-text: var(--color-white);
+  --btn-border: var(--color-royal-blue);
 }
 
+
+/* --- Dark Mode --- */
+.dark {
+
+  /* FIX: синхронізував з body */
+  --background: #0a0a0a;
+  --foreground: #ededed;
+
+  --color-scheme-1-background: #0a0a0a;
+  --color-scheme-1-foreground: #191919;
+  --color-scheme-1-text: #ededed;
+  --color-scheme-1-border: rgba(255, 255, 255, 0.15);
+
+  --color-scheme-2-background: #131f43;
+  --color-scheme-2-foreground: #1a2a5a;
+  --color-scheme-2-text: #ffffff;
+  --color-scheme-2-border: rgba(255, 255, 255, 0.15);
+
+  --btn-background: var(--color-royal-blue-dark);
+  --btn-text: var(--color-white);
+  --btn-border: var(--color-royal-blue-dark);
+}
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-family), ui-sans-serif, system-ui, sans-serif;
 }

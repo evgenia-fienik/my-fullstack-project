@@ -1,4 +1,3 @@
-
 import {Story} from '../models/story.js';
 import {User} from '../models/user.js'
 import { uploadToCloudinary } from "../services/cloudinary.js";
@@ -16,8 +15,11 @@ export const getAllStoriesController = async (req, res, next)=>{
 
         const [stories, totalItems] = await Promise.all([
             Story.find(filter)
-             .select('_id title img date cstegory favoriteCount ownerId')
-             .skip(skip),
+             .sort({date: -1})
+             .populate('category', 'name')                     // <--- тут
+             .populate('ownerId', 'name avatarUrl')    // <--- тут
+             .skip(skip)
+             .limit(Number(perPage)),
 
             Story.countDocuments(filter), 
         ]);
@@ -138,7 +140,9 @@ export const getFavoritesController = async(req, res, next) => {
         const paginatedIds = user.favorites.slice(skip, skip + Number(perPage));
 
         const stories = await Story.find({ _id: { $in: paginatedIds } })
-      .select('_id title img date category favoriteCount ownerId');
+      .select('_id title img date category favoriteCount ownerId')
+      .populate('ownerId', 'name avatarUrl')
+      .populate('category', 'name');
 
       res.status(200).json({
       status: 200,

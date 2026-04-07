@@ -1,0 +1,179 @@
+.footer {
+  background-color: var(--color-scheme-2-foreground);
+  padding: 48px 20px;
+  box-sizing: border-box;
+}
+
+/* Центруючий контейнер */
+.wraper {
+  max-width: 345px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px
+}
+
+/* Бренд */
+.brandLink {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  
+}
+
+.logo{
+    width: 23px;
+    height: 23px;
+}
+.brandText {
+  font-family: var(--second-family);
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--color-scheme-1-text);
+}
+
+/* Соц мережі */
+.socialList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
+}
+
+.socialList a {
+  display: inline-flex;
+  width: 32px;
+  height: 32px;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-scheme-2-text);
+}
+
+/* Навігація */
+.navList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  align-items: center;
+}
+
+.navLink {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 16px;
+  text-decoration: none;
+  line-height: 1.5;
+  color: var(--color-scheme-2-text);
+}
+
+/* Нижній ряд: копірайт і анкори */
+.bottom {
+  width: 100%;
+  max-width: 345px;
+  border-top: 1px solid  var(--color-scheme-2-border);
+  padding-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+
+.copyright{
+font-family: var(--font-family);
+font-weight: 400;
+font-size: 12px;
+line-height: 1.5;
+color: var(--color-scheme-2-text);
+}
+
+@media (min-width: 768px){
+.footer {
+    padding: 48px 32px;
+}
+
+.wraper{
+ max-width: 704px;
+ display: flex;
+ flex-direction: row;
+ flex-wrap: wrap;
+ justify-content: space-between;
+ align-items: center;
+ gap: 23px 0;
+}
+
+.top{
+    order: 1;
+}
+
+.social{
+    order: 2;
+}
+
+.nav{
+ order: 3;
+ width: 100%; /* Займає весь рядок під лого та соцмережами */
+display: flex;
+justify-content: center;
+}
+
+.navList {
+    flex-direction: row; /* Горизонтально */
+    gap: 40px;
+  }
+
+  .bottom {
+    order: 4;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+    min-width: 704px;
+  }
+}
+
+@media (min-width: 1440px){
+
+.footer {
+padding: 48px 32px;
+}
+
+.wraper{
+    max-width: 1312px;
+
+}
+
+.top{
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+.social {
+    
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+  .nav {
+  
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+
+
+.bottom{
+    max-width: 1312px;
+}
+
+.copyright{
+    font-size: 16px;
+}
+}

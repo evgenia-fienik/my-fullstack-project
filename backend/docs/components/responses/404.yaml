@@ -1,0 +1,13 @@
+'404':
+  description: Story not found
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          status:
+            type: integer
+            example: 404
+          message:
+            type: string
+            example: Story not found!

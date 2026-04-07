@@ -1,0 +1,13 @@
+User:
+  type: object
+  properties:
+    id:
+      type: string
+    name:
+      type: string
+    avatarUrl:
+      type: string
+    articlesAmount:
+      type: number
+    description:
+      type: string

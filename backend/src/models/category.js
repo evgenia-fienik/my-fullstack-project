@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
  const categorySchema = new mongoose.Schema({
     name: {
-        type: stringify,
+        type: String,
         required: true,
     },
  });

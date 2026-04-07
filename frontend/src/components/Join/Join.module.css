@@ -1,0 +1,170 @@
+.section{
+width: 100%;
+min-width: 220px;
+display: flex;
+justify-content:center;
+padding: 32px 20px;
+background-color: var(--color-scheme-2-background);
+}
+
+.card{
+width: 100%;
+max-width: 335px;
+height: 262px;
+border-radius: 24px;
+overflow: hidden;     
+position: relative;
+background-image: url('/join/join-mob.jpg');
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+box-shadow: 0 6px 18px rgba(3, 10, 21, 0.06);
+margin-left: 5px;
+}
+
+.content{
+ position: relative;
+  z-index: 1;
+  padding: 20px 0;
+  max-width: 295px;
+  height: 100%;
+  color: var(--color-white);
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  gap: 16px;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+.title{
+  
+  font-family: var(--second-family, Inter), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 1.2;
+  margin: 0;
+  text-align: left;
+}
+
+.desc{
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0;
+  max-width: 46ch;
+  opacity: 0.95;
+  margin-bottom: 2px;
+}
+
+.cta{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12px;
+  width: 100%; 
+  height: 48px;
+  background-color:var(--color-royal-blue);
+  color: var(--color-white);
+  border-radius: 8px;
+  padding: 6px 12px;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  border:none;
+  transition: background-color 180ms ease, box-shadow 180ms ease, transform 120ms ease, border-color 120ms ease;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  cursor: pointer;
+}
+
+.cta:hover{
+    border: 1px solid var(--color-royal-blue);
+    background-color: var(--color-royal-blue-lighter);
+    transform: translateY(-2px);
+    color: var(--color-scheme-2-text);
+}
+
+.cta:active{
+border: 1px solid var(--color-royal-blue);
+border: 1px solid var(--color-royal-blue);
+transition: transform 80ms ease;
+}
+
+@media (min-width: 768px) {
+.section{
+padding: 32px;
+
+} 
+
+.card{
+background-image: url('/join/join-tab.jpg');
+max-width: 704px;
+height: 260px;
+} 
+
+.content{
+margin: 0;
+align-items: flex-start;
+max-width: 558px;
+padding: 32px;
+gap: 8px;
+}
+
+.title{
+font-size: 32px;
+
+}
+
+.desc{
+ font-size: 16px;
+ margin-bottom: 8px;
+ 
+}
+
+
+.cta{
+ padding: 6px 12px;
+max-width: 153px;
+margin: 0;
+}
+
+}
+
+@media (min-width: 1440px){
+
+
+.section{
+padding: 48px 64px;
+
+} 
+
+.card{
+background-image: url('/join/join-desk.jpg');
+max-width: 1312px;
+height: 436px;
+} 
+
+.content{
+    gap: 24px;
+    padding: 64px 10px 64px 64px;
+   
+}
+
+.title{
+font-size: 48px;
+
+}
+
+.desc{
+    font-size: 20px;
+}
+
+.cta{
+
+max-width: 169px;
+font-size: 16px;
+}
+}

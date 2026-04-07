@@ -1,4 +1,6 @@
 import mongoose  from "mongoose";
+import {Category} from './category.js'
+import { User } from './user.js';
 
 const storySchema = new mongoose.Schema ({
     img: String,
@@ -10,7 +12,7 @@ const storySchema = new mongoose.Schema ({
     }, 
     ownerId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
+        ref: 'users',
     },
     date: String,
     favoriteCount: {

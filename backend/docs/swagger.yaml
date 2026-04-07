@@ -40,6 +40,8 @@ paths:
       responses:
         '201':
           description: User successfully registered
+        '400':
+          $ref: '#/components/responses/400.yaml'  
         '409':
           description: Email already in use
 
@@ -66,8 +68,11 @@ paths:
       responses:
         '200':
           description: Successfully logged in
+        '400':
+          $ref: '#/components/responses/400'  
         '401':
-          description: Invalid email or password
+          $ref: '#/components/responses/401'
+
 
   /api/auth/refresh:
     post:
@@ -90,8 +95,10 @@ paths:
       responses:
         '200':
           description: Successfully logged out
+        '400':
+          $ref: '#/components/responses/400'  
         '401':
-          description: Unauthorized
+          $ref: '#/components/responses/401'
 
   /api/users:
     get:
@@ -222,7 +229,7 @@ paths:
                     type: object
                     properties: 
                       user: 
-                        $ref: '#/components/schemas/User'    
+                        $ref: './components/schemas/user.yaml#/User'    
         '401':
           description: Unauthorized
 
@@ -298,18 +305,7 @@ paths:
                             example: 4    
 
         '404':
-          description: User not found
-          content: 
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    example: 404
-                  message: 
-                    type: string
-                    example: User not found!  
+          $ref: '#/components/responses/404' 
 
   /api/stories:
     get:
@@ -477,19 +473,8 @@ paths:
                         type: boolean
                         example: true
         '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    example: 401
-                  message:
-                    type: string
-                    example: Unauthorized       
-                        
+          $
+        ref: '#/components/responses/401'
   /api/stories/{id}/favorites:
     post:
       tags:
@@ -519,44 +504,11 @@ paths:
                     type: string
                     example: Story added to favorites!
         '404':
-          description: Story not found
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    example: 404
-                  message:
-                    type: string
-                    example: Story not found!
+          $ref: '#/components/responses/404'
         '409':
-          description: Story already in favorites
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    example: 409
-                  message:
-                    type: string
-                    example: Story already in favorites!
+          $ref: '#/components/responses/409'
         '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    example: 401
-                  message:
-                    type: string
-                    example: Unauthorized
+          $ref: '#/components/responses/401'
     delete:
       tags:
         - Stories
@@ -585,44 +537,11 @@ paths:
                     type: string
                     example: Story removed from favorites!
         '404':
-          description: Story not found
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    example: 404
-                  message:
-                    type: string
-                    example: Story not found!
+          $ref: '#/components/responses/404'
         '409':
-          description: Story not in favorites
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    example: 409
-                  message:
-                    type: string
-                    example: Story not in favorites!
+          $ref: '#/components/responses/409'
         '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    example: 401
-                  message:
-                    type: string
-                    example: Unauthorized      
+          $ref: '#/components/responses/401'    
   /api/stories/my:
     get:
       tags:
@@ -705,18 +624,7 @@ paths:
                         type: boolean
                         example: true
         '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    example: 401
-                  message:
-                    type: string
-                    example: Unauthorized               
+          $ref: '#/components/responses/401'             
     post:
       tags:
         - Stories
@@ -794,19 +702,8 @@ paths:
                           ownerId:
                             type: string
                             example: 6881563901add19ee16fcff5
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    example: 401
-                  message:
-                    type: string
-                    example: Unauthorized   
+        '401': 
+          $ref: '#/components/responses/401'  
   /api/stories/{id}:
     patch:
       tags:
@@ -901,31 +798,10 @@ paths:
                     type: string
                     example: You are not allowed to edit this story!
         '404':
-          description: Story not found
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    example: 404
-                  message:
-                    type: string
-                    example: Story not found!
+          $ref: '#/components/responses/404'
         '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: integer
-                    example: 401
-                  message:
-                    type: string
-                    example: Unauthorized                                                                                                                                  
+          $ref: '#/components/responses/401'
+                                                                                                                                          
 components:
   securitySchemes:
     bearerAuth:

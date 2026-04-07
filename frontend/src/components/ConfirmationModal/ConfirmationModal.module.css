@@ -1,0 +1,141 @@
+.overflow{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh; 
+    background-color: rgba(0, 0, 0, 0.25);
+    z-index: 1000;
+}
+
+.modal{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+    border-radius: 24px;
+    padding: 64px 20px 20px;
+    width: 335px;
+    height: auto;
+    min-height: 338px;
+    max-width: 768px;
+    background-color:#ffffff;
+}
+
+.closeBtn{
+  position: absolute;
+  border: none; 
+  top: 20px;
+  right: 20px; 
+  width: 32px;
+  height: 32px;
+}
+
+.title{
+ font-weight: 700;
+ font-size: 26px;
+ line-height: 120%;
+ letter-spacing: -0.01em;
+ text-align: center;
+ color: var(--color-scheme-1-text);
+ max-width: 294px;
+}
+
+.description{
+ font-weight: 400;
+ font-size: 16px;
+ line-height: 150%;
+ text-align: center;
+ color: var(--color-scheme-1-text);
+}
+
+.buttons{
+ display: flex;
+ gap: 24px;
+ align-items: center;
+ flex-direction: column;
+}
+
+.btnPrimary{
+ border-radius: 8px;
+ padding: 6px 12px;
+ width: 295px; 
+ height: 48px;
+ background-color: var(--opacity-neutral-darkest-5);
+ font-weight: 500;
+ font-size: 16px;
+ line-height: 150%;
+ color: var(--color-neutral-darkest);
+}
+
+.btnSecondary{
+ border: 1px solid var(--color-royal-blue);
+ border-radius: 8px;
+ padding: 6px 12px;
+ width: 295px;
+ height: 48px;
+ background-color: var(--color-royal-blue);
+ font-weight: 500;
+font-size: 16px;
+line-height: 150%;
+color: var(--color-white);
+}
+
+
+@media (min-width: 768px) {
+
+.modal{
+  padding: 64px 32px;
+  width: 704px;  
+}
+
+.title{
+font-weight: 700;
+font-size: 32px;
+letter-spacing: -0.01em;
+line-height: 120%;
+max-width: 500px;
+}
+
+.buttons {
+  flex-direction: row;
+}
+
+.btnPrimary{
+ width: 203px;   
+} 
+
+.btnSecondary{
+  width: 203px;
+}
+
+}
+
+
+@media (min-width: 1440px){
+
+.modal{
+ width: 768px;
+ padding: 64px;
+ min-height: 312px;
+}
+
+.title{
+font-weight: 700;
+font-size: 48px;
+letter-spacing: -0.01em;
+max-width: 640px;
+}
+
+.description{
+    font-size: 20px;
+}
+
+
+
+}

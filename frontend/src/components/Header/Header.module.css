@@ -1,0 +1,303 @@
+.header {
+  z-index: 100;
+  width: 100%;
+padding: 16px 20px 16px 20px;
+}
+
+/* Header states */
+.transparent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: transparent;
+  border-bottom: none;
+}
+
+.white {
+  position: sticky;
+  top: 0;
+  background-color: var(--color-scheme-1-background);
+  border-bottom: 1px solid var(--color-neutral-light);
+}
+
+/* Container: centered with max-width */
+.container {
+  width: 100%;
+  max-width: 375px;
+  margin: 0 auto;
+    /* safe padding on small screens */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-sora);
+  font-weight: 400;
+  font-size: 17px;
+  color: var(--color-foreground);
+  text-decoration: none;
+}
+.transparent .logo {
+  color:var(--color-white);
+}
+
+.logoIcon {
+  width: 18px;
+  height: 22px;
+}
+
+/* Navigation */
+.nav {
+  display: none; 
+  gap: 24px;
+  align-items: center;
+}
+.navLink {
+  font-size: 14px;
+  color: inherit; 
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.transparent .navLink {
+ color: var(--color-white);
+}
+.white .navLink {
+  color: var(--color-foreground)
+}
+
+/* Right side wrappers */
+.rightSide {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Actions and tablet actions */
+.actions {
+  display: none; 
+  align-items: center;
+  gap: 12px;
+}
+
+.tabletActions {
+  display: none; /* visible on tablet */
+  align-items: center;
+  gap: 12px;
+}
+
+/* Buttons - base */
+.btnPrimary {
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 0.2s, color 0.2s, border 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+
+/* Secondary base */
+.btnSecondary {
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 0.2s, color 0.2s, border 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+
+/* Colors depending on header state */
+/* When header is transparent (home) */
+.transparent .btnPrimary {
+  background-color: rgba(255,255,255,0.12);
+  color: var(--color-white);
+  border: 1px solid rgba(255,255,255,0.18);
+}
+.transparent .btnSecondary {
+  background-color: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+/* When header is white/other pages */
+.white .btnPrimary {
+  background-color: var(--color-royal-blue);
+  color: var(--color-white);
+  border: none;
+}
+.white .btnSecondary {
+  background-color: transparent;
+  color: var(--color-foreground);
+  border: 1px solid var(--opacity-neutral-darkest-10);
+}
+
+/* Hover states */
+.btnPrimary:hover { cursor: pointer; opacity: .95; }
+.btnSecondary:hover { cursor: pointer; opacity: .95; }
+
+/* Burger */
+.burger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ background-color: var(--opacity-white-10);
+  border-radius: 8px;
+  padding: 4px;
+  width: 32px;
+  height: 32px;
+  font-size: 18px;
+  cursor: pointer;
+  color: var(--color-white); 
+  border: none;
+}
+.transparent .burger {
+  color: var(--color-white);
+  color: var(--color-white);
+}
+.white .burger {
+  color: var(--color-foreground); 
+  background-color: var(--opacity-black-5);
+}
+
+/* Mobile menu (keeps transitions — do NOT set display:none here) */
+.mobileMenu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--color-scheme-2-background);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 20px;
+  gap: 24px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.mobileMenuOpen {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+.mobileMenuHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.mobileNav {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 16px;
+}
+.mobileLink {
+  font-size: 18px;
+  color: var(--color-foreground);
+  text-decoration: none;
+  font-weight: 500;
+}
+.mobileLinkPrimary {
+  font-size: 18px;
+  color: var(--color-blue-primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+.mobileAuthLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+/* Close button */
+.closeBtn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #1a1a1a;
+}
+
+/* --- Medium screens (tablet) --- */
+@media (min-width: 768px) {
+  /* Show tabletActions and burger (tablet layout) */
+
+  .container{
+    max-width: 768px;
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+  
+  .nav {
+    display: none;
+  }
+
+  .actions {
+    display: none;
+  }
+
+  .tabletActions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .burger {
+    display: flex;
+  }
+
+  .mobileAuthLinks {
+    display: none; /* auth links in mobile menu hidden on tablet */
+  }
+}
+
+/* --- Desktop: show primary nav + actions, hide tablet actions and burger --- */
+@media (min-width: 1440px) {
+  .nav {
+    display: flex;
+  }
+
+  .nav {
+    gap: 24px;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: 16px;
+  }
+
+  .tabletActions {
+    display: none;
+  }
+
+  .burger {
+    display: none;
+  }
+}
+
+/* Wider desktop adjustments */
+@media (min-width: 1440px) {
+  .container {
+    padding: 24px 80px;
+    max-width: 1440px;
+  }
+}
