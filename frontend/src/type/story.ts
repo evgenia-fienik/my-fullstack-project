@@ -19,14 +19,14 @@ export interface IStory {
     title?: string;
     img?: string;
     article?: string;
-    category?: ICategory;      // тепер об’єкт
-    ownerId?: IOwner;          // об’єкт автора
+    category?: ICategory;      
+    ownerId?: IOwner;         
     date?: string;
     favoriteCount?: number;
 }
 
 interface Props {
-    story?: IStory; // optional
+    story?: IStory; 
     isSaved?: boolean;
     onSaveToggle?: (id: string, add: boolean) => Promise<void>;
     isAuthenticated?: boolean;

@@ -3,6 +3,7 @@ import { Nunito_Sans, Sora } from 'next/font/google';
 import Providers from './providers';
 
 import Header from '@/components/Header/Header';
+import Footer from '@/components/Footer/Footer'
 import './globals.css';
 
 const nunitoSans = Nunito_Sans({
@@ -32,8 +33,11 @@ export default function RootLayout({
       <body className={`${nunitoSans.variable} ${sora.variable}`}>
         <Providers>
 
-          <Header/>
-           {children}
+         <div className="page">
+            <Header />
+            <main className="main">{children}</main>
+            <Footer />
+          </div>
         </Providers>
        
       </body>

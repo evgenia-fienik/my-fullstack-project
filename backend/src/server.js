@@ -69,3 +69,4 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
     console.log(`Swagger: http://localhost:${PORT}/api-docs`);
   });
 };
+startServer();

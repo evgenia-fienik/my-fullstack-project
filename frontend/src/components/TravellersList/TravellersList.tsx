@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './TravellersList.module.css';
 
 type Traveller = {
@@ -19,6 +19,9 @@ export default function TravellersList() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const listRef = useRef<HTMLUListElement | null>(null);
+  const pendingScrollToRef = useRef<string | null>(null); 
+
   const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 
   const fetchPage = async (pg = 1) => {
@@ -26,20 +29,20 @@ export default function TravellersList() {
       setLoading(true);
       setError(null);
 
-      console.log(`[TravellersList] fetch: ${API_BASE}/api/users?page=${pg}&perPage=${perPage}`);
       const res = await fetch(`${API_BASE}/api/users?page=${pg}&perPage=${perPage}`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
       const json = await res.json();
-      console.log('[TravellersList] response json:', json);
-
       const data = json?.data;
       if (!data) throw new Error('Invalid response shape');
 
       const newUsers = Array.isArray(data.users) ? data.users : [];
-     
-      setItems(prev => (pg === 1 ? newUsers : [...prev, ...newUsers]));
 
+      if (pg > 1 && newUsers.length > 0) {
+        pendingScrollToRef.current = newUsers[0]._id;
+      }
+
+      setItems(prev => (pg === 1 ? newUsers : [...prev, ...newUsers]));
       setHasNext(Boolean(data.hasNextPage));
       setPage(Number(data.page ?? pg));
     } catch (err: any) {
@@ -52,7 +55,57 @@ export default function TravellersList() {
 
   useEffect(() => {
     fetchPage(1);
+  
   }, []);
+
+ 
+  useEffect(() => {
+    const id = pendingScrollToRef.current;
+    if (!id) return;
+
+  
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const el = listRef.current?.querySelector(`[data-id="${id}"]`) as HTMLElement | null;
+        if (!el) {
+  
+          pendingScrollToRef.current = null;
+          return;
+        }
+
+        const list = listRef.current;
+
+
+        const listComputed = list ? getComputedStyle(list) : null;
+        const listHasOwnScroll =
+          !!list &&
+          (list.scrollHeight > list.clientHeight) &&
+          (listComputed?.overflowY === 'auto' || listComputed?.overflowY === 'scroll');
+
+        if (list && listHasOwnScroll) {
+        
+          const offsetTop = el.offsetTop;
+      
+          const paddingTop = parseInt(listComputed?.paddingTop || '0', 10) || 0;
+          const target = offsetTop - paddingTop;
+          list.scrollTo({ top: target, behavior: 'smooth' });
+        } else {
+        
+          const rect = el.getBoundingClientRect();
+          const absoluteTop = window.scrollY + rect.top;
+
+          
+          const headerOffset = 0; 
+
+          window.scrollTo({
+            top: Math.max(0, absoluteTop - headerOffset),
+            behavior: 'smooth',
+          });
+        }
+        pendingScrollToRef.current = null;
+      });
+    });
+  }, [items]);
 
   const handleLoadMore = async () => {
     if (!hasNext || loading) return;
@@ -66,13 +119,11 @@ export default function TravellersList() {
 
         {error && <div role="alert" className={styles.error}>{error}</div>}
 
-       
         {loading && items.length === 0 && <p>Завантаження...</p>}
-        {!loading && items.length === 0 && <p style={{ color: '#777' }}>Карток ще немає</p>}
 
-        <ul className={styles.list}>
+        <ul className={styles.list} ref={listRef}>
           {items.map(item => (
-            <li key={item._id} className={styles.item}>
+            <li key={item._id} data-id={item._id} className={styles.item}>
               <article className={styles.card}>
                 <figure className={styles.avatarWrap}>
                   <img
