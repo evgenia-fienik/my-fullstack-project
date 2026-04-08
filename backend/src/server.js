@@ -35,7 +35,7 @@ export const startServer = async () => {
     ? process.env.APP_URL
     : 'http://localhost:3000';
 
-  app.use(cors({ origin: allowedOrigin, credentials: true }));
+  app.use(cors({ origin: true, credentials: true }));
   app.use(express.json());
   app.use(cookieParser());
 
