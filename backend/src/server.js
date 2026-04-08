@@ -62,7 +62,7 @@ export const startServer = async () => {
   app.use(errorHandler);
 
   // 8. Запуск сервера
-  app.listen(PORT, () => {
+  app.listen(PORT, '0.0.0.0', () => {
     console.log(`Backend running on port ${PORT}`);
     console.log(`Swagger docs: http://localhost:${PORT}/api-docs`);
   });
