@@ -1,4 +1,4 @@
- import express from 'express';
+import express from 'express';
 import pino from 'pino-http';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -17,9 +17,9 @@ export const startServer = async () => {
   const __filename = fileURLToPath(import.meta.url);
   const __dirname = path.dirname(__filename);
   const app = express();
-  
-  // Порт: Render задає PORT, локально беремо 4000
-  const PORT = Number(process.env.PORT) || 4000;
+
+  // Порт: Render призначає PORT, локально беремо 4000
+  const PORT = process.env.PORT || 4000;
 
   // 1. Логер
   app.use(
@@ -30,7 +30,7 @@ export const startServer = async () => {
     })
   );
 
-  // 2. CORS для локально / продакшн
+  // 2. CORS для локалки / продакшн
   const allowedOrigin = process.env.NODE_ENV === 'production'
     ? process.env.APP_URL
     : 'http://localhost:3000';
@@ -61,6 +61,7 @@ export const startServer = async () => {
   // 7. Error handler
   app.use(errorHandler);
 
+  // 8. Запуск сервера
   app.listen(PORT, () => {
     console.log(`Backend running on port ${PORT}`);
     console.log(`Swagger docs: http://localhost:${PORT}/api-docs`);
