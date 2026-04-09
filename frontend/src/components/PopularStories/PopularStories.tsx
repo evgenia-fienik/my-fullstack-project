@@ -4,7 +4,9 @@ import { useEffect, useRef, useState } from 'react';
 import TravellersStoriesItem, { IStory } from '../TravellersStoriesItem/TravellersStoriesItem';
 import styles from './PopularStories.module.css';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+const API_BASE =
+  process.env.NEXT_PUBLIC_API_URL ||
+  'https://my-fullstack-project-vr8p.onrender.com';
 
 export default function PopularStories() {
   const [stories, setStories] = useState<IStory[]>([]);

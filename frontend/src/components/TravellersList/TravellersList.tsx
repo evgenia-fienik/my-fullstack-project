@@ -22,7 +22,9 @@ export default function TravellersList() {
   const listRef = useRef<HTMLUListElement | null>(null);
   const pendingScrollToRef = useRef<string | null>(null); 
 
-  const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+  const API_BASE =
+  process.env.NEXT_PUBLIC_API_URL ||
+  'https://my-fullstack-project-vr8p.onrender.com';
 
   const fetchPage = async (pg = 1) => {
     try {
